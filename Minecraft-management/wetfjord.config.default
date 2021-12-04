@@ -1,0 +1,16 @@
+#!/bin/bash
+backuplocation=/path/to/backup/destinations/
+buildtoolslocation=/path/to/buildtools/
+discordwebhook=DiscordWebhookUrl
+javapath=Path to java executable or just write java to use the distro default.
+keepdays=Days to keep backup before removing
+serverjar=spigot.jar
+serverlocation=/path/to/server/folder/
+
+#Announcements:
+announcements=(
+"announcement1"
+"announcement2"
+"and so on"
+)
+
