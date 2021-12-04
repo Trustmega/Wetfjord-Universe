@@ -6,6 +6,7 @@ screensession=testserver
 serverlocation=/data/testservers/wetfjordTest/serverMinecraft/
 backuplocation=/data/backups/minecraft/testserver/
 buildtoolslocation=/home/minecraft/buildtools/
+javapath=/usr/java/oracle/jdk-17.0.1/bin/java
 serverjar=spigot.jar
 days=5
 
@@ -16,7 +17,7 @@ case ${option} in
 			screen -d -m -S "$screensession"
 			sleep 2
 			screen -R "$screensession" -X stuff "cd "$serverlocation"\n"
-			screen -R "$screensession" -X stuff "java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-restart) MEM="${2:-1024}"
 			screen -R "$screensession" -X stuff "say server will reboot in 30 seconds. Back in 1 minute $(printf '\r')"
@@ -38,7 +39,7 @@ case ${option} in
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
 			cp "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
-			screen -R "$screensession" -X stuff "java -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-backup)
 			screen -R "$screensession" -X stuff "say Backup starting. You may experience a little lag$(printf '\r')"
@@ -84,7 +85,7 @@ case ${option} in
 	-update) REVISION="${2}"
 			cd "$buildtoolslocation"
 			curl "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar" -o BuildTools.jar
-			java -jar BuildTools.jar --rev "$REVISION"
+			"$javapath" -jar BuildTools.jar --rev "$REVISION"
 			mv "$buildtoolslocation"spigot-"$REVISION".jar "$buildtoolslocation""$serverjar"
 			;;
 	-announcement1)
