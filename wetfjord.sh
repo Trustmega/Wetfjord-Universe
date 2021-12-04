@@ -17,7 +17,7 @@ case ${option} in
 			screen -d -m -S "$screensession"
 			sleep 2
 			screen -R "$screensession" -X stuff "cd "$serverlocation"\n"
-			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-restart) MEM="${2:-1024}"
 			screen -R "$screensession" -X stuff "say server will reboot in 30 seconds. Back in 1 minute $(printf '\r')"
@@ -39,7 +39,7 @@ case ${option} in
 			screen -R "$screensession" -X stuff "stop $(printf '\r')"
 			sleep 20
 			cp "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
-			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -XX:MaxPermSize=128M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$screensession" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
 	-backup)
 			screen -R "$screensession" -X stuff "say Backup starting. You may experience a little lag$(printf '\r')"
