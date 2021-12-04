@@ -10,10 +10,11 @@ wetfjord.config.default:
 Copy wetfjord.config.default to yourservername.config and change the options to your usecase.
 
 wetfjord.sh: 
-Usage: [servername] | [-start memory in mb] | [-restart memory in mb] | [-backup] | [-stop] | [-delete] |  [-reload] | [-update] | [-announcement]
+Usage: [servername] | [-start] | [-restart] | [-backup] | [-stop] | [-delete] |  [-reload] | [-update {spigotversion}] | [-announcement]
 
-To start a server named "wetfjordsurvival" with 8GB memory the usage is as follows:
-`./wetfjord.sh wetfjordsurvival -start 8192`
+To start a server named "wetfjordsurvival" the usage is as follows:
+`./wetfjord.sh wetfjordsurvival -start`
+Be aware that if you haven't specified any value to "mem" in the .config it will start the server with a default value of 2048MB of ram.
 
 Announcements are picked randomly from the options file.
 
@@ -23,7 +24,7 @@ Tasks can easily be automated by using crontab, example:
 
 ```
 # m h  dom mon dow   command
-0 4 * * * /path/to/wetfjord.sh wetfjordsurvival -restart 8192
+0 4 * * * /path/to/wetfjord.sh wetfjordsurvival -restart
 45 20 * * * /path/to/wetfjord.sh wetfjordsurvival -delete
 0 */6 * * * /path/to/wetfjord.sh wetfjordsurvival -backup
 */15 * * * * /path/to/wetfjord.sh wetfjordsurvival -announcement

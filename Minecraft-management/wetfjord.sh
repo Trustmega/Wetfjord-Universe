@@ -8,15 +8,21 @@ fi
 
 source $1.config
 
+if [ -z "$mem" ]
+then
+	mem=2048
+fi
+
+
 option="${2}"
 case ${option} in
-	-start) MEM="${3:-1024}"
+	-start)
 			screen -d -m -S "$1"
 			sleep 2
 			screen -R "$1" -X stuff "cd "$serverlocation"\n"
-			screen -R "$1" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$1" -X stuff ""$javapath" -Xms"$mem"M -Xmx"$mem"M -jar "$serverlocation""$serverjar" nogui\n"
 		;;
-	-restart) MEM="${3:-1024}"
+	-restart)
 			screen -R "$1" -X stuff "say server will reboot in 30 seconds. Back in 1 minute $(printf '\r')"
 			sleep 10
 			screen -R "$1" -X stuff "say server will reboot in 20 seconds. Back in 1 minute $(printf '\r')"
@@ -39,7 +45,7 @@ case ${option} in
 			screen -R "$1" -X stuff "stop $(printf '\r')"
 			sleep 30
 			cp "$buildtoolslocation""$serverjar" "$serverlocation""$serverjar"
-			screen -R "$1" -X stuff ""$javapath" -Xms"$MEM"M -Xmx"$MEM"M -jar "$serverlocation""$serverjar" nogui\n"
+			screen -R "$1" -X stuff ""$javapath" -Xms"$mem"M -Xmx"$mem"M -jar "$serverlocation""$serverjar" nogui\n"
                         curl -H "Content-Type: application/json" -X POST -d '{"username": "wetfjordserver", "content": "Server restart completed."}' "discordwebhook"
 		;;
 	-backup)
@@ -89,7 +95,7 @@ case ${option} in
 			screen -R "$1" -X stuff "say §2Announcement: ${announcements[$RANDOM % ${#announcements[@]} ]} $(printf '\r')"
 		;;
    *)
-      echo "`basename ${0}`: usage: [servername] | [-start memory in mb] | [-restart memory in mb] | [-backup] | [-stop] | [-delete] |  [-reload] | [-update] | [-announcement]"
+      echo "`basename ${0}`: usage: [servername] | [-start] | [-restart] | [-backup] | [-stop] | [-delete] |  [-reload] | [-update {spigotversion}] | [-announcement]"
       exit 1 # Command to come out of the program with status 1
 		;;
 esac
