@@ -7,6 +7,7 @@ import subprocess
 import random
 import a2s
 import asyncio
+import os.path
 from hansibotConfig import *
 
 
@@ -152,6 +153,18 @@ async def on_message(message):
                 players_and_score += player.name + "\t \t" + str(player.score) + "\t \t" + str(playtime_minutes) + "\n"
             msg = '``` Map: {} \n Game: {} \n \n Players online: {} \n Name \t \t Score \t \t Playtime (minutes) \n {} ```'.format( game_info.map_name, game_info.game, player_count, players_and_score)
             await channel.send(msg)
+
+        if message.content.startswith('!restart'):
+            if not os.path.exists('/tmp/please_restart_arma3')
+                msg = 'Restarting Arma3 server, hold on..'.format(message)
+                await channel.send(msg)
+                subprocess(['touch', '/tmp/please_restart_arma3'])
+                await asyncio.sleep(60)
+                subprocess(['rm', '/tmp/please_restart_arma3'])
+            else
+                msg = 'Restart already in progress, take a chill pill :hansi: '.format(message)
+                await channel.send(msg)
+
 
 @client.event
 async def on_ready():
