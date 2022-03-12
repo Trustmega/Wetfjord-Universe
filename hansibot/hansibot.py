@@ -155,14 +155,14 @@ async def on_message(message):
             await channel.send(msg)
 
         if message.content.startswith('!restart'):
-            if not os.path.exists('/tmp/please_restart_arma3')
+            if not os.path.exists('/tmp/please_restart_arma3'):
                 msg = 'Restarting Arma3 server, hold on..'.format(message)
                 await channel.send(msg)
-                subprocess(['touch', '/tmp/please_restart_arma3'])
-                await asyncio.sleep(60)
-                subprocess(['rm', '/tmp/please_restart_arma3'])
-            else
-                msg = 'Restart already in progress, take a chill pill :hansi: '.format(message)
+                subprocess.run(['touch', '/tmp/please_restart_arma3'])
+                subprocess.run(['chmod', '766', '/tmp/please_restart_arma3'])
+#                await asyncio.sleep(60)
+            else:
+                msg = 'Restart already in progress, take a chill pill <:hansi:285832380952870914> '.format(message)
                 await channel.send(msg)
 
 
